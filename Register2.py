@@ -2,10 +2,24 @@ import smtplib,ssl
 from email.message import EmailMessage
 import random
 
-nimi=["mikolkyle@gmail.com"]
-salas=["admin123"]
+nimi=[]
+salas=[]
 sees=False
 user=""
+
+def loeFail():
+    with open("users.txt", "r") as file:
+        for line in file:
+            user, passw = line.split(":")
+            nimi.append(user)
+            salas.append(passw.strip())
+    print("Fail loetud!")
+
+def salvestaFail():
+    with open("users.txt", "w") as file:
+        for user, passw in zip(nimi,salas):
+            file.write(f"{user}:{passw}\n")
+    print("Fail salvestatud!")
 
 def saada_email(tema:str, sisu:str, user_email:str):
  smtp_server='smtp.gmail.com'
